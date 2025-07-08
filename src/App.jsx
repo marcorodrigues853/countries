@@ -1,46 +1,81 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Button from './components/Button';
 import Card from './components/Card';
 
 function App() {
-    const [contador, setContador] = useState(1);
+    const [moeda, setMoeda] = useState('eur');
+    const [paises, setPaises] = useState([]);
+    const [search, setSearch] = useState('spain');
+
+    console.log('paises', paises);
+    console.log('search', search);
+    useEffect(() => {
+        console.log('dependencias vazias');
+
+        //  recolher dados na API
+        const fetchData = async () => {
+            const data = await fetch(
+                `https://restcountries.com/v3.1/currency/${moeda}`
+            );
+            const countries = await data.json();
+
+            setPaises(countries);
+        };
+
+        fetchData();
+
+        // guardar o que vem da a API
+    }, [moeda]);
+
+    const filteredCountries = paises.filter((pais) => {
+        return String(pais.name.common)
+            .toLowerCase()
+            .includes(search.toLowerCase());
+    });
+
     return (
-        <Card>
+        <>
+            <h1>bye bye {moeda}!</h1>
             <Button
-                label={`ver mais ${contador} `}
-                // onClick={() => setContador(contador + 1)}
+                label={'eur'}
                 onClick={() => {
-                    setContador((prev) => {
-                        return prev + 1;
-                    });
+                    setMoeda('eur');
                 }}
             />
-            <div style={{ padding: '20px', display: 'flex', gap: '16px' }}>
-                <Button label={'incrementa + 3'} />
-                <Button label={'decrementa - 3'} />
-                <Button label={'reset'} />
-            </div>
 
-            <Card>
-                <h4>Enunciado:</h4>
-                <ul className="trolha">
-                    <li>
-                        utilizar o botão para no onclick ele incrementar o valor
-                        de mais 1
-                    </li>
-                    <li>
-                        Segundo Botão que diga reset e que mude o contador para
-                        1
-                    </li>
-                    <li>
-                        Acrescentar dois botões em que um incrementa +3 o outro
-                        decrementa -3
-                    </li>
-                    <li>Nota o decremento não pode ser inferior a 0</li>
-                </ul>
-            </Card>
-        </Card>
+            <Button
+                label={'usd'}
+                onClick={() => {
+                    setMoeda('usd');
+                }}
+            />
+            <Button
+                label={'cop'}
+                onClick={() => {
+                    setMoeda('cop');
+                }}
+            />
+
+            <input
+                type="text"
+                onChange={(event) => {
+                    const newValue = event.target.value;
+                    setSearch(newValue);
+                }}
+            />
+            <div className="grid grid-4">
+                {filteredCountries.map((pais) => {
+                    return (
+                        <Card key={pais.cca3}>
+                            <img src={pais.flags?.png} alt="" />
+                            <h4>{pais.name.common}</h4>
+                            <span>{pais.subregion}</span>
+                        </Card>
+                    );
+                })}
+            </div>
+        </>
     );
 }
 
