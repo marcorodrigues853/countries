@@ -73,6 +73,10 @@ button:focus-visible {
     padding: 20px;
 }
 
+.grid-4 {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 .card {
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -82,9 +86,6 @@ button:focus-visible {
     text-align: center;
     transition: transform 0.2s ease;
     color: black;
-}
-.grid-4 {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .card:hover {
