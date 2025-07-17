@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import CountryCard from './CountryCard';
+import { Link } from 'react-router';
 
 function CountriesList() {
     const [currentCurrency, setCurrentCurrency] = useState('eur');
@@ -14,8 +15,9 @@ function CountriesList() {
             const data = await fetch(
                 `https://restcountries.com/v3.1/currency/${currentCurrency}`
             );
+
             const newCountriesList = await data.json();
-            console.log('newCountriesList', newCountriesList);
+
             setCountries(newCountriesList);
         };
 
@@ -69,12 +71,15 @@ function CountriesList() {
             <div className="grid grid-4">
                 {countries.map((country) => {
                     return (
-                        <CountryCard
-                            key={country.cca3}
-                            flag={country.flags.png}
-                            name={country.name.common}
-                            capital={country.capital}
-                        />
+                        <Link
+                            to={`/country/${country.name.common}`}
+                            key={country.cca3}>
+                            <CountryCard
+                                flag={country.flags.png}
+                                name={country.name.common}
+                                capital={country.capital}
+                            />
+                        </Link>
                     );
                 })}
             </div>

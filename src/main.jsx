@@ -9,6 +9,10 @@ import CountriesPage from './pages/CountriesPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.js';
 import { NavLink } from 'react-router';
 import NavBar from './components/NavBar.jsx';
+import CountryDetailPage from './pages/CountryDetail.jsx';
+import CountriesList from './components/CountriesList.jsx';
+
+import CountryPage from './pages/CountryPage.jsx';
 
 // 1.1 criar 4 Components
 // Homepage
@@ -25,8 +29,12 @@ createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<Homepage />} />
                 <Route path="/continents" element={<ContinentsPage />} />
-                <Route path="/countries" element={<CountriesPage />} />
-                <Route path="/batatas" element={<h1>BATATAS</h1>} />
+                <Route path="/countries" element={<CountriesList />} />
+                <Route path="/country/:name" element={<CountryPage />} />
+                <Route
+                    path="/posts/:postId/comments/:commentId"
+                    element={<CountryPage />}
+                />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </BrowserRouter>
