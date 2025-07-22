@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { Link, useParams } from 'react-router';
+
+import Card from '../components/Card';
 
 function CountryPage() {
     const params = useParams();
+
     const countryName = params.name;
 
     const [countryInfo, setCountryInfo] = useState({});
@@ -11,15 +14,23 @@ function CountryPage() {
 
     useEffect(() => {
         const fetchCountry = async () => {
+            // Função auxiliar para simular um atraso
             function wait(ms) {
                 return new Promise((resolve) => setTimeout(resolve, ms));
             }
-            const data = await fetch(
-                `https://restcountries.com/v3.1/name/spain?fullText=true`
-            );
-            const newCountry = await data.json();
-            await wait(3000);
 
+            // Faz uma chamada à API REST Countries usando o nome do país
+            const data = await fetch(
+                `https://restcountries.com/v3.1/name/${countryName}?fullText=true`
+            );
+
+            // Converte a resposta da API de JSON para um objeto JavaScript
+            const newCountry = await data.json();
+
+            // Descomente a linha abaixo para simular um atraso (por exemplo, para fins de teste)
+            // await wait(3000);
+
+            // Atualiza o estado com o primeiro objeto do país retornado pela resposta
             setCountryInfo(newCountry[0]);
         };
 
@@ -35,11 +46,14 @@ function CountryPage() {
         <div>
             {!hasData && <h1>Loading...</h1>}
             {hasData > 0 && (
-                <div>
+                <Card>
                     <h1>nome do pais : {countryInfo.name.common}</h1>
                     <h1>população : {countryInfo.population}</h1>
                     <h1>população : {countryInfo.capital}</h1>
-                </div>
+                    <Link to={`/region/${countryInfo.region}`}>
+                        <h1>ir para {countryInfo.region}</h1>
+                    </Link>
+                </Card>
             )}
         </div>
     );

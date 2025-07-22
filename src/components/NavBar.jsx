@@ -6,7 +6,7 @@ function NavBar() {
             <Link to={'/'}>Homepage</Link>
             <Link to={'/continents'}>Continents</Link>
             <Link to={'/countries'}>Countries</Link>
-            <Link to={'/batatas'}>Batatas</Link>
+            <Link to={'/regions'}>Regions</Link>
         </nav>
     );
 }
