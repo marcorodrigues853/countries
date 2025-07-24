@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 
 import Card from '../components/Card';
+import Badge from '../components/Badge';
+import HeaderWithImage from '../components/HeaderWithImage';
+import CountryBorders from '../components/CountryBorders';
+import CountryCard from '../components/CountryCard';
 
 function CountryPage() {
     const params = useParams();
@@ -35,7 +39,7 @@ function CountryPage() {
         };
 
         fetchCountry();
-    }, []);
+    }, [countryName]);
 
     console.log('countryName', countryName);
     const hasData = Object.keys(countryInfo).length;
@@ -46,14 +50,27 @@ function CountryPage() {
         <div>
             {!hasData && <h1>Loading...</h1>}
             {hasData > 0 && (
-                <Card>
-                    <h1>nome do pais : {countryInfo.name.common}</h1>
-                    <h1>população : {countryInfo.population}</h1>
-                    <h1>população : {countryInfo.capital}</h1>
-                    <Link to={`/region/${countryInfo.region}`}>
-                        <h1>ir para {countryInfo.region}</h1>
-                    </Link>
-                </Card>
+                <div>
+                    {/* <HeaderWithImage
+                        name={countryInfo.name.common}
+                        official={countryInfo.name.official}
+                        region={countryInfo.region}
+                        subregion={countryInfo.subregion}
+                        continents={countryInfo.continents}
+                        flags={countryInfo.flags}
+                    /> */}
+
+                    <Card>
+                        <h1>nome do pais : {countryInfo.name.common}</h1>
+                        <h1>população : {countryInfo.population}</h1>
+                        <h1>população : {countryInfo.capital}</h1>
+                        <Link to={`/region/${countryInfo.region}`}>
+                            <h1>ir para {countryInfo.region}</h1>
+                        </Link>
+                    </Card>
+
+                    <CountryBorders borderCodes={countryInfo.borders} />
+                </div>
             )}
         </div>
     );

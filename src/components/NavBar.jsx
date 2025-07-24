@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import CountryBorders from './CountryBorders';
 
 function NavBar() {
     return (
