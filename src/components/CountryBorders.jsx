@@ -13,6 +13,7 @@ function CountryBorders({ borderCodes }) {
         // Hook useEffect para executar código quando o componente é montado ou quando borderCodes muda.
         const fetchCountriesByCodes = async () => {
             // Define uma função assíncrona para buscar os dados dos países.
+
             const concatenatedByComma = borderCodes.join(','); // Junta os códigos das fronteiras numa string separada por vírgulas.
 
             const data = await fetch(
@@ -29,16 +30,17 @@ function CountryBorders({ borderCodes }) {
 
     return (
         <Card>
-            {' '}
             {/* Renderiza o componente Card como contêiner. */}
             <h1>CountryBorders</h1> {/* Título do componente. */}
             {countries.map((country) => {
                 // Itera sobre o array countries para renderizar os dados de cada país.
                 return (
                     <Link to={`/country/${country.name.common}`}>
-                        {' '}
                         {/* Cria um link para a página do país com base no nome comum. */}
-                        <h1>{country.name.common}</h1>{' '}
+
+                        <h1>{country.name.common}</h1>
+                        <img src={country.flags.png}></img>
+
                         {/* Exibe o nome comum do país. */}
                     </Link>
                 );

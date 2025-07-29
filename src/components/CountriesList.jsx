@@ -18,6 +18,7 @@ function CountriesList() {
 
             const newCountriesList = await data.json();
 
+            console.log('newCountriesList', newCountriesList);
             setCountries(newCountriesList);
         };
 
